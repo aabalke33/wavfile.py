@@ -218,6 +218,9 @@ def read(file, readmarkers=False, readmarkerlabels=False, readmarkerslist=False,
                 str1 = fid.read(24)
                 cuepointid, datatype, start, end, fraction, playcount = struct.unpack('<iiiiii', str1)
                 loops.append({'cuepointid': cuepointid, 'datatype': datatype, 'start': start, 'end': end, 'fraction': fraction, 'playcount': playcount})
+        elif chunk_id == b'acid':
+            str1 = fid.read(28)
+            size, typeoffile, rootnote, unknownconst, unknownconst, totalbeats, denominator, numerator, tempo = struct.unpack('<iihhfihhf', str1)
         else:
             if log:
                 warnings.warn("Chunk " + str(chunk_id) + " skipped", WavFileWarning)
